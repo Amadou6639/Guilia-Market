@@ -1,0 +1,39 @@
+/*
+  Ce fichier CSS est destiné à des styles personnalisés et des ajustements.
+  Il est recommandé de l'utiliser pour des sélecteurs spécifiques qui
+  ne peuvent pas être gérés directement par les classes de Tailwind CSS.
+*/
+
+/* Styles généraux */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Transitions douces pour les liens et boutons */
+a,
+button {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Styles pour les sections, ajout de padding pour une meilleure lisibilité */
+.section-padding {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/* Styles spécifiques au catalogue et aux cartes de véhicules */
+.vehicle-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Styles pour le pied de page */
+footer {
+  background-color: #1f2937; /* Couleur de fond foncée */
+}

@@ -1,0 +1,65 @@
+/*
+  admin.css - Styles spécifiques à l'interface d'administration.
+*/
+
+/* Styles généraux pour le corps de la page admin */
+body {
+  background-color: #f3f4f6; /* Couleur de fond douce */
+  font-family: "Inter", sans-serif;
+}
+
+/* Styles pour la barre latérale de navigation */
+aside {
+  transition: width 0.3s ease;
+}
+
+/* Styles des liens de navigation */
+nav ul li a {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #4b5563; /* Gris plus foncé au survol */
+}
+
+/* Style de la page active dans la navigation */
+nav ul li a.bg-gray-700 {
+  background-color: #4b5563;
+  color: #e5e7eb;
+}
+
+/* Styles pour les conteneurs principaux de contenu */
+main > div {
+  min-height: calc(
+    100vh - 48px
+  ); /* Ajuste la hauteur pour un meilleur affichage */
+}
+
+/* Styles pour les cartes de statistiques */
+.stat-card {
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Styles pour les tableaux */
+table thead th {
+  text-transform: uppercase;
+}
+
+table tbody tr:hover {
+  background-color: #e5e7eb;
+}
+
+/* Styles pour les modales */
+.modal {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+}

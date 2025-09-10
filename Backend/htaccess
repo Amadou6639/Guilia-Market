@@ -1,0 +1,15 @@
+# .htaccess - Réécriture d'URL pour l'API REST
+# Ce fichier doit être placé dans le dossier /backend/
+
+# Activer le module de réécriture d'URL
+RewriteEngine On
+
+# Vérifier si le fichier ou le dossier demandé existe.
+# Si oui, ne pas appliquer les règles de réécriture.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Réécrire toutes les requêtes vers api.php,
+# en conservant le chemin original dans l'URI
+RewriteRule ^(.*)$ api.php [QSA,L]
+

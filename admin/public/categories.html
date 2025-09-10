@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Catégories - Admin</title>
+    <link rel="stylesheet" href="../css/admin.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-200 font-sans flex">
+    <!-- Barre de navigation latérale -->
+    <aside class="bg-gray-800 text-white w-64 p-4 min-h-screen fixed">
+      <h2 class="text-2xl font-bold mb-8">Admin Dashboard</h2>
+      <nav>
+        <ul class="space-y-4">
+          <li>
+            <a
+              href="index.html"
+              class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Tableau de bord</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="vehicles.html"
+              class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              <i class="fas fa-car"></i>
+              <span>Véhicules</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="categories.html"
+              class="flex items-center space-x-2 p-2 rounded-lg bg-gray-700"
+            >
+              <i class="fas fa-tags"></i>
+              <span>Catégories</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="users.html"
+              class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              <i class="fas fa-users"></i>
+              <span>Utilisateurs</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Contenu principal -->
+    <main class="ml-64 p-8 flex-1">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        Gestion des Catégories
+      </h1>
+
+      <div class="flex justify-end mb-4">
+        <button
+          id="add-category-btn"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+        >
+          <i class="fas fa-plus"></i>
+          <span>Ajouter une catégorie</span>
+        </button>
+      </div>
+
+      <!-- Tableau des catégories -->
+      <div class="bg-white p-6 rounded-lg shadow-md overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                ID
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Nom
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            id="category-table-body"
+            class="bg-white divide-y divide-gray-200"
+          >
+            <!-- Les lignes des catégories seront insérées ici par JavaScript -->
+          </tbody>
+        </table>
+        <div
+          id="no-categories-message"
+          class="hidden text-center text-gray-500 p-4"
+        >
+          Aucune catégorie n'est disponible.
+        </div>
+      </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-gray-800 text-white p-4 text-center mt-auto ml-64">
+      <p>&copy; 2024 AutoMarket. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+      // Script pour la gestion des catégories
+      document.addEventListener("DOMContentLoaded", () => {
+        const categoryTableBody = document.getElementById(
+          "category-table-body"
+        );
+        const noCategoriesMessage = document.getElementById(
+          "no-categories-message"
+        );
+
+        // Données de test pour simuler la récupération depuis l'API
+        const categories = [
+          { id: 1, name: "Neuf" },
+          { id: 2, name: "Occasion" },
+          { id: 3, name: "Électrique" },
+          { id: 4, name: "Utilitaire" },
+        ];
+
+        const renderCategories = () => {
+          if (categories.length === 0) {
+            noCategoriesMessage.classList.remove("hidden");
+          } else {
+            noCategoriesMessage.classList.add("hidden");
+            categoryTableBody.innerHTML = ""; // Nettoyer le tableau
+            categories.forEach((category) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${category.id}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${category.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button data-id="${category.id}" class="text-indigo-600 hover:text-indigo-900 mr-2 edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button data-id="${category.id}" class="text-red-600 hover:text-red-900 delete-btn">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        `;
+              categoryTableBody.appendChild(row);
+            });
+          }
+        };
+
+        renderCategories();
+
+        // Écouteurs d'événements pour les boutons (logique à implémenter)
+        categoryTableBody.addEventListener("click", (e) => {
+          if (e.target.closest(".edit-btn")) {
+            const id = e.target.closest(".edit-btn").dataset.id;
+            console.log(`Modifier la catégorie avec l'ID : ${id}`);
+            // Logique pour ouvrir un formulaire de modification
+          }
+          if (e.target.closest(".delete-btn")) {
+            const id = e.target.closest(".delete-btn").dataset.id;
+            console.log(`Supprimer la catégorie avec l'ID : ${id}`);
+            // Logique pour supprimer la catégorie
+          }
+        });
+
+        document
+          .getElementById("add-category-btn")
+          .addEventListener("click", () => {
+            console.log("Ajouter une nouvelle catégorie");
+            // Logique pour ouvrir un formulaire d'ajout
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion Administration - AutoMarket</title>
+    <!-- Chargement de Tailwind CSS pour un style épuré et réactif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center min-h-screen p-4">
+    <!-- Conteneur principal de la carte de connexion -->
+    <div class="w-full max-w-md">
+      <div class="bg-white p-8 rounded-2xl shadow-2xl">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-2">
+          AutoMarket Admin
+        </h1>
+        <p class="text-center text-gray-500 mb-8">
+          Veuillez vous connecter pour accéder au tableau de bord.
+        </p>
+
+        <!-- Formulaire de connexion -->
+        <form id="loginForm" class="space-y-6">
+          <!-- Champ pour le nom d'utilisateur -->
+          <div>
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Nom d'utilisateur</label
+            >
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <i class="fas fa-user text-gray-400"></i>
+              </span>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- Champ pour le mot de passe -->
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Mot de passe</label
+            >
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <i class="fas fa-lock text-gray-400"></i>
+              </span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- Message d'erreur (initialement caché) -->
+          <div
+            id="errorMessage"
+            class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative"
+            role="alert"
+          >
+            <span class="block sm:inline"
+              >Nom d'utilisateur ou mot de passe incorrect.</span
+            >
+          </div>
+
+          <!-- Bouton de connexion -->
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Se connecter
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+          const errorMessage = document.getElementById("errorMessage");
+
+          // Logique de vérification (actuellement simulée)
+          if (username === "admin" && password === "password") {
+            // Si les informations sont correctes, rediriger vers le tableau de bord
+            window.location.href = "admin-dashboard.html";
+          } else {
+            // Si les informations sont incorrectes, afficher un message d'erreur
+            errorMessage.classList.remove("hidden");
+          }
+        });
+    </script>
+  </body>
+</html>

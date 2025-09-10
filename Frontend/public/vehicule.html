@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fiche Véhicule - AutoMarket</title>
+    <!-- Chargement de Tailwind CSS pour un style rapide et réactif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+      }
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <!-- En-tête (réutilisé pour la cohérence) -->
+    <header class="bg-white shadow-md">
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-3xl font-bold text-blue-600"
+          >AutoMarket</a
+        >
+        <div class="hidden md:flex items-center space-x-6">
+          <a
+            href="index.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Accueil</a
+          >
+          <a
+            href="catalogue.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Voitures</a
+          >
+          <a
+            href="about.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >À propos</a
+          >
+          <a
+            href="vendre.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Vendre ma voiture</a
+          >
+          <a
+            href="financement.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Financement</a
+          >
+          <a
+            href="contact.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Contact</a
+          >
+        </div>
+        <div id="auth-links-desktop" class="flex items-center space-x-4">
+          <a
+            href="connexion.html"
+            class="text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors duration-300"
+          >
+            Connexion
+          </a>
+          <a
+            href="inscription.html"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+          >
+            Inscription
+          </a>
+        </div>
+        <!-- Bouton pour le menu mobile -->
+        <button
+          id="mobile-menu-button"
+          class="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none"
+        >
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </nav>
+      <!-- Menu mobile (caché par défaut) -->
+      <div
+        id="mobile-menu"
+        class="md:hidden bg-white shadow-lg p-4 transition-all duration-300 ease-in-out transform scale-y-0 origin-top"
+      >
+        <a
+          href="index.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Accueil</a
+        >
+        <a
+          href="catalogue.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Voitures</a
+        >
+        <a
+          href="about.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >À propos</a
+        >
+        <a
+          href="vendre.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Vendre ma voiture</a
+        >
+        <a
+          href="financement.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Financement</a
+        >
+        <a
+          href="contact.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Contact</a
+        >
+      </div>
+    </header>
+
+    <!-- Section principale de la fiche véhicule -->
+    <main class="container mx-auto px-6 py-8 flex-grow">
+      <div class="bg-white rounded-xl shadow-lg p-6 lg:p-10">
+        <div class="flex flex-col lg:flex-row gap-8">
+          <!-- Galerie de photos et détails du véhicule -->
+          <div class="lg:w-2/3">
+            <h1 id="vehicle-name" class="text-3xl font-bold text-gray-800 mb-2">
+              <!-- Le nom du véhicule sera chargé ici -->
+            </h1>
+            <p id="vehicle-price" class="text-lg text-gray-600 mb-6">
+              <!-- Le prix sera chargé ici -->
+            </p>
+
+            <!-- Galerie de photos -->
+            <div class="mb-6">
+              <img
+                id="main-photo"
+                src="../assets/images/porshe.png"
+                alt="Photo principale de la voiture"
+                class="w-full rounded-xl shadow-md mb-4"
+              />
+              <div class="flex space-x-2 overflow-x-auto">
+                <img
+                  src="../assets/images/porche.png"
+                  alt="Miniature 1"
+                  class="w-24 h-16 rounded-lg cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+                  onclick="changeMainPhoto(this)"
+                />
+                <img
+                  src="../assets/images/porshe2.png"
+                  alt="Miniature 2"
+                  class="w-24 h-16 rounded-lg cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+                  onclick="changeMainPhoto(this)"
+                />
+                <img
+                  src="../assets/images/porshe3.png"
+                  alt="Miniature 3"
+                  class="w-24 h-16 rounded-lg cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+                  onclick="changeMainPhoto(this)"
+                />
+                <img
+                  src="../assets/images/porshe4.png"
+                  alt="Miniature 4"
+                  class="w-24 h-16 rounded-lg cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+                  onclick="changeMainPhoto(this)"
+                />
+              </div>
+            </div>
+
+            <!-- Description détaillée -->
+            <div class="mb-6">
+              <h2 class="text-2xl font-semibold text-gray-800 mb-2">
+                Description
+              </h2>
+              <p id="vehicle-description" class="text-gray-700 leading-relaxed">
+                <!-- La description du véhicule sera chargée ici -->
+              </p>
+            </div>
+
+            <!-- Caractéristiques techniques -->
+            <div>
+              <h2 class="text-2xl font-semibold text-gray-800 mb-2">
+                Caractéristiques
+              </h2>
+              <ul
+                id="vehicle-features"
+                class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700"
+              >
+                <!-- Les caractéristiques du véhicule seront chargées ici -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- Simulateur de crédit et actions -->
+          <aside class="lg:w-1/3 bg-gray-100 p-6 rounded-xl shadow-inner">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+              Simulateur de crédit
+            </h2>
+            <form id="loan-simulator-form" class="space-y-4">
+              <div>
+                <label for="car-price" class="block text-gray-700"
+                  >Prix du véhicule (€)</label
+                >
+                <input
+                  type="number"
+                  id="car-price"
+                  value="0"
+                  min="0"
+                  readonly
+                  class="w-full px-4 py-2 mt-1 rounded-lg border border-gray-300 focus:outline-none bg-gray-200"
+                />
+              </div>
+              <div>
+                <label for="loan-amount" class="block text-gray-700"
+                  >Apport personnel (€)</label
+                >
+                <input
+                  type="number"
+                  id="loan-amount"
+                  value="3000"
+                  min="0"
+                  class="w-full px-4 py-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label for="loan-term" class="block text-gray-700"
+                  >Durée du prêt (années)</label
+                >
+                <input
+                  type="number"
+                  id="loan-term"
+                  value="5"
+                  min="1"
+                  max="10"
+                  class="w-full px-4 py-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label for="interest-rate" class="block text-gray-700"
+                  >Taux d'intérêt (%)</label
+                >
+                <input
+                  type="number"
+                  id="interest-rate"
+                  value="3.5"
+                  min="0"
+                  step="0.1"
+                  class="w-full px-4 py-2 mt-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <button
+                type="button"
+                id="calculate-btn"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
+              >
+                Calculer la mensualité
+              </button>
+            </form>
+            <div
+              class="mt-6 text-center p-4 bg-white rounded-lg shadow-inner border border-gray-200"
+            >
+              <p class="text-sm text-gray-600 mb-1">Mensualité estimée</p>
+              <p id="monthly-payment" class="text-3xl font-bold text-blue-600">
+                0.00 €
+              </p>
+            </div>
+
+            <div class="mt-6">
+              <a
+                id="contact-seller-link"
+                class="block text-center w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300"
+              >
+                Contacter le vendeur
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+      <div class="container mx-auto text-center px-4">
+        <p>&copy; 2025 AutoMarket. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Script pour gérer le menu mobile
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      mobileMenuButton.addEventListener("click", () => {
+        if (mobileMenu.classList.contains("scale-y-0")) {
+          mobileMenu.classList.remove("scale-y-0");
+          mobileMenu.classList.add("scale-y-100");
+        } else {
+          mobileMenu.classList.remove("scale-y-100");
+          mobileMenu.classList.add("scale-y-0");
+        }
+      });
+
+      // Script pour changer la photo principale dans la galerie
+      function changeMainPhoto(thumbnail) {
+        const mainPhoto = document.getElementById("main-photo");
+        mainPhoto.src = thumbnail.src;
+      }
+
+      // Données de véhicules simulées (identiques à catalogue.html)
+      // Dans une application réelle, ces données viendraient d'une API.
+      const vehiclesData = [
+        {
+          id: 1,
+          brand: "Toyota",
+          model: "Corolla",
+          price: 25000,
+          year: 2022,
+          mileage: 35000,
+          fuel: "Essence",
+          description:
+            "Une voiture fiable et économique, parfaite pour les trajets quotidiens.",
+          img: "../assets/images/toyotacorolla 2022.png",
+        },
+        {
+          id: 2,
+          brand: "Honda",
+          model: "Civic",
+          price: 28000,
+          year: 2023,
+          mileage: 22000,
+          fuel: "Essence",
+          description:
+            "Design sportif et technologies avancées pour un confort de conduite optimal.",
+          img: "../assets/images/hondacrv.png",
+        },
+        {
+          id: 3,
+          brand: "Ford",
+          model: "Mustang",
+          price: 55000,
+          year: 2024,
+          mileage: 5000,
+          fuel: "Essence",
+          description:
+            "Le rêve américain, un moteur puissant et un style emblématique.",
+          img: "../assets/images/fordmustang2024.png",
+        },
+        {
+          id: 4,
+          brand: "Nissan",
+          model: "Qashqai",
+          price: 29500,
+          year: 2023,
+          mileage: 18000,
+          fuel: "Diesel",
+          description:
+            "Un SUV compact et familial, idéal pour la ville et les escapades du week-end.",
+          img: "../assets/images/NissanQ.png",
+        },
+        {
+          id: 5,
+          brand: "BMW",
+          model: "Série 3",
+          price: 42000,
+          year: 2022,
+          mileage: 28000,
+          fuel: "Essence",
+          description:
+            "Luxe et performance réunis dans une berline allemande de renom.",
+          img: "../assets/images/bmw2022.png.jpg",
+        },
+        {
+          id: 6,
+          brand: "Tesla",
+          model: "Model 3",
+          price: 58000,
+          year: 2024,
+          mileage: 10000,
+          fuel: "Électrique",
+          description:
+            "La voiture électrique qui a révolutionné le marché. Technologie de pointe et autonomie exceptionnelle.",
+          img: "../assets/images/tesla2024.png",
+        },
+        {
+          id: 7,
+          brand: "Renault",
+          model: "Clio",
+          price: 18000,
+          year: 2021,
+          mileage: 45000,
+          fuel: "Essence",
+          description:
+            "La citadine française par excellence, agile et économique.",
+          img: "../assets/images/RENAULT-CLIO.jpeg",
+        },
+        {
+          id: 8,
+          brand: "Peugeot",
+          model: "3008",
+          price: 32000,
+          year: 2023,
+          mileage: 15000,
+          fuel: "Diesel",
+          description:
+            "Un SUV au design audacieux et un intérieur moderne. Confort garanti.",
+          img: "../assets/images/peugeot2023.png",
+        },
+        {
+          id: 9,
+          brand: "Volkswagen",
+          model: "Golf",
+          price: 26500,
+          year: 2023,
+          mileage: 20000,
+          fuel: "Essence",
+          description:
+            "La référence des berlines compactes. Fiabilité et polyvalence.",
+          img: "..assets/images/volkswagen2023.png",
+        },
+        {
+          id: 10,
+          brand: "Mercedes-Benz",
+          model: "Classe A",
+          price: 35000,
+          year: 2024,
+          mileage: 8000,
+          fuel: "Essence",
+          description:
+            "Un concentré de luxe et de technologie dans une berline compacte.",
+          img: "../assets/images/mercedes2024.png",
+        },
+        {
+          id: 11,
+          brand: "Audi",
+          model: "A4",
+          price: 38000,
+          year: 2022,
+          mileage: 30000,
+          fuel: "Essence",
+          description:
+            "Une berline élégante et performante, avec le raffinement Audi.",
+          img: "../assets/images/audi2022.png",
+        },
+        {
+          id: 12,
+          brand: "Hyundai",
+          model: "Tucson",
+          price: 31000,
+          year: 2023,
+          mileage: 25000,
+          fuel: "Essence",
+          description: "Un SUV moderne et spacieux, très bien équipé.",
+          img: "../assets/images/hyundai2023.png",
+        },
+        {
+          id: 13,
+          brand: "Kia",
+          model: "Sportage",
+          price: 34000,
+          year: 2024,
+          mileage: 12000,
+          fuel: "Essence",
+          description:
+            "Un SUV avec une garantie constructeur étendue et un design audacieux.",
+          img: "../assets/images/kia2024.png",
+        },
+        {
+          id: 14,
+          brand: "Skoda",
+          model: "Octavia",
+          price: 22000,
+          year: 2022,
+          mileage: 40000,
+          fuel: "Diesel",
+          description:
+            "Spacieuse et pratique, l'Octavia est une valeur sûre pour la famille.",
+          img: "../assets/images/skoda2022.png",
+        },
+        {
+          id: 15,
+          brand: "Porsche",
+          model: "911",
+          price: 120000,
+          year: 2024,
+          mileage: 1000,
+          fuel: "Essence",
+          description:
+            "Une icône de l'automobile, un moteur de course et des sensations uniques.",
+          img: "../assets/images/porshe2024.png",
+        },
+        {
+          id: 16,
+          brand: "Lexus",
+          model: "RX",
+          price: 65000,
+          year: 2023,
+          mileage: 15000,
+          fuel: "Hybride",
+          description:
+            "Un SUV hybride alliant luxe, confort et efficacité énergétique.",
+          img: "../assets/images/lexus2023.png",
+        },
+        {
+          id: 17,
+          brand: "Volvo",
+          model: "XC60",
+          price: 45000,
+          year: 2022,
+          mileage: 28000,
+          fuel: "Essence",
+          description:
+            "Un SUV élégant et sûr, reconnu pour sa sécurité de pointe.",
+          img: "../assets/images/volvo2022.png",
+        },
+        {
+          id: 18,
+          brand: "Jaguar",
+          model: "F-Pace",
+          price: 52000,
+          year: 2021,
+          mileage: 33000,
+          fuel: "Diesel",
+          description:
+            "Un SUV sportif avec le style et la performance typiques de Jaguar.",
+          img: "../assets/images/jaguar2021.png",
+        },
+        {
+          id: 19,
+          brand: "Fiat",
+          model: "500",
+          price: 16000,
+          year: 2023,
+          mileage: 15000,
+          fuel: "Essence",
+          description:
+            "La citadine italienne au charme intemporel. Parfaite pour la ville.",
+          img: "../assets/images/fiat2023.png",
+        },
+        {
+          id: 20,
+          brand: "Chevrolet",
+          model: "Camaro",
+          price: 48000,
+          year: 2022,
+          mileage: 20000,
+          fuel: "Essence",
+          description:
+            "Le muscle car américain par excellence. Son moteur V8 fait chanter la route.",
+          img: "../assets/images/chevrolet2022.png",
+        },
+      ];
+
+      // Script pour le simulateur de crédit
+      document.getElementById("calculate-btn").addEventListener("click", () => {
+        const carPrice = parseFloat(document.getElementById("car-price").value);
+        const loanAmount = parseFloat(
+          document.getElementById("loan-amount").value
+        );
+        const loanTerm = parseFloat(document.getElementById("loan-term").value);
+        const interestRate =
+          parseFloat(document.getElementById("interest-rate").value) / 100;
+
+        const principal = carPrice - loanAmount;
+        const monthlyInterestRate = interestRate / 12;
+        const numberOfPayments = loanTerm * 12;
+
+        let monthlyPayment = 0;
+        if (monthlyInterestRate > 0) {
+          monthlyPayment =
+            (principal *
+              (monthlyInterestRate *
+                Math.pow(1 + monthlyInterestRate, numberOfPayments))) /
+            (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+        } else {
+          monthlyPayment = principal / numberOfPayments;
+        }
+
+        document.getElementById(
+          "monthly-payment"
+        ).textContent = `${monthlyPayment.toFixed(2)} €`;
+      });
+
+      // Script pour charger les données du véhicule dynamiquement
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const vehicleId = parseInt(urlParams.get("id"));
+        const vehicle = vehiclesData.find((v) => v.id === vehicleId);
+
+        const mainContent = document.querySelector("main .bg-white");
+
+        if (vehicle) {
+          // Mettre à jour le contenu de la page
+          document.title = `${vehicle.brand} ${vehicle.model} - AutoMarket`;
+          document.getElementById(
+            "vehicle-name"
+          ).textContent = `${vehicle.brand} ${vehicle.model} - ${vehicle.year}`;
+          document.getElementById(
+            "vehicle-price"
+          ).textContent = `${vehicle.price.toLocaleString("fr-FR")} €`;
+          document.getElementById("main-photo").src = vehicle.img;
+          document.getElementById(
+            "main-photo"
+          ).alt = `Photo de ${vehicle.brand} ${vehicle.model}`;
+          document.getElementById("vehicle-description").textContent =
+            vehicle.description;
+
+          // Mettre à jour les caractéristiques
+          const featuresList = document.getElementById("vehicle-features");
+          featuresList.innerHTML = `
+            <li class="flex items-center"><i class="fas fa-tachometer-alt mr-2 text-blue-500"></i> Kilométrage: ${vehicle.mileage.toLocaleString(
+              "fr-FR"
+            )} km</li>
+            <li class="flex items-center"><i class="fas fa-calendar-alt mr-2 text-blue-500"></i> Année: ${
+              vehicle.year
+            }</li>
+            <li class="flex items-center"><i class="fas fa-gas-pump mr-2 text-blue-500"></i> Carburant: ${
+              vehicle.fuel
+            }</li>
+            <li class="flex items-center"><i class="fas fa-cogs mr-2 text-blue-500"></i> Transmission: Automatique (info statique)</li>
+            <li class="flex items-center"><i class="fas fa-car mr-2 text-blue-500"></i> Type: Berline (info statique)</li>
+            <li class="flex items-center"><i class="fas fa-palette mr-2 text-blue-500"></i> Couleur: Noir (info statique)</li>
+          `;
+
+          // Mettre à jour le simulateur de crédit
+          const carPriceInput = document.getElementById("car-price");
+          carPriceInput.value = vehicle.price;
+
+          // Mettre à jour le lien de contact
+          const contactLink = document.getElementById("contact-seller-link");
+          const subject = `Prise de contact pour le véhicule ${vehicle.brand} ${vehicle.model}`;
+          contactLink.href = `mailto:vendeur-placeholder@automarket.com?subject=${encodeURIComponent(
+            subject
+          )}`;
+
+          // Calculer la mensualité initiale
+          document.getElementById("calculate-btn").click();
+        } else {
+          // Gérer le cas où le véhicule n'est pas trouvé
+          mainContent.innerHTML = `
+            <div class="text-center py-10">
+              <h1 class="text-3xl font-bold text-gray-800">Véhicule non trouvé</h1>
+              <p class="text-gray-600 mt-4">Le véhicule que vous cherchez n'existe pas ou a été retiré.</p>
+              <a href="catalogue.html" class="mt-6 inline-block bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">Retour au catalogue</a>
+            </div>
+          `;
+        }
+      });
+    </script>
+    <script src="../js/auth.js" defer></script>
+  </body>
+</html>

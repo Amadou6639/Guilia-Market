@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catalogue - AutoMarket</title>
+    <!-- Chargement de Tailwind CSS pour un style rapide et réactif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6;
+      }
+
+      /* Styles spécifiques pour le catalogue */
+      .vehicle-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .vehicle-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+    </style>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <!-- En-tête de la page (identique aux autres pages) -->
+    <header class="bg-white shadow-md">
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-3xl font-bold text-blue-600"
+          >AutoMarket</a
+        >
+        <div class="hidden md:flex items-center space-x-6">
+          <a
+            href="index.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Accueil</a
+          >
+          <a
+            href="catalogue.html"
+            class="text-blue-600 transition-colors duration-300"
+            >Voitures</a
+          >
+          <a
+            href="vendre.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Vendre ma voiture</a
+          >
+          <a
+            href="financement.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Financement</a
+          >
+          <a
+            href="contact.html"
+            class="text-gray-600 hover:text-blue-600 transition-colors duration-300"
+            >Contact</a
+          >
+        </div>
+        <div id="auth-links-desktop" class="flex items-center space-x-4">
+          <a href="connexion.html"
+            class="text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg transition-colors duration-300"
+          >
+            Connexion
+          </a>
+          <a href="inscription.html"
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+          >
+            Inscription
+          </a>
+        </div>
+        <!-- Bouton pour le menu mobile -->
+        <button
+          id="mobile-menu-button"
+          class="md:hidden text-gray-600 hover:text-blue-600 focus:outline-none"
+        >
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </nav>
+      <!-- Menu mobile (caché par défaut) -->
+      <div
+        id="mobile-menu"
+        class="md:hidden bg-white shadow-lg p-4 transition-all duration-300 ease-in-out transform scale-y-0 origin-top"
+      >
+        <a
+          href="index.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Accueil</a
+        >
+        <a
+          href="catalogue.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Voitures</a
+        >
+        <a
+          href="vendre.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Vendre ma voiture</a
+        >
+        <a
+          href="financement.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Financement</a
+        >
+        <a
+          href="contact.html"
+          class="block py-2 text-gray-600 hover:text-blue-600"
+          >Contact</a
+        >
+      </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="container mx-auto px-6 py-8 flex-grow">
+      <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">
+        Catalogue des véhicules
+      </h1>
+
+      <!-- Section de recherche et de filtres -->
+      <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Marque, modèle..."
+            class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <select
+            id="brand-filter"
+            class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Toutes les marques</option>
+          </select>
+          <select
+            id="fuel-filter"
+            class="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Tous les carburants</option>
+            <option value="Essence">Essence</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Électrique">Électrique</option>
+            <option value="Hybride">Hybride</option>
+          </select>
+          <div class="flex items-center space-x-2">
+            <label for="price-sort" class="text-gray-700 font-medium"
+              >Trier par prix:</label
+            >
+            <select
+              id="price-sort"
+              class="px-2 py-1 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="asc">Croissant</option>
+              <option value="desc">Décroissant</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grille des véhicules -->
+      <div
+        id="vehicle-grid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+      >
+        <!-- Les cartes de véhicules seront insérées ici par JavaScript -->
+      </div>
+
+      <div
+        id="no-results-message"
+        class="hidden text-center text-gray-500 mt-8"
+      >
+        <p>Aucun véhicule ne correspond à votre recherche.</p>
+      </div>
+    </main>
+
+    <!-- Pied de page (identique aux autres pages) -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+      <div class="container mx-auto text-center px-4">
+        <p>&copy; 2025 Guilia AutoMarket. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Script pour le menu mobile
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      mobileMenuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("scale-y-0");
+        mobileMenu.classList.toggle("scale-y-100");
+      });
+
+      // Données de véhicules simulées
+      const vehiclesData = [
+        {
+          id: 1,
+          brand: "Toyota",
+          model: "Corolla",
+          price: 25000,
+          year: 2022,
+          mileage: 35000,
+          fuel: "Essence",
+          description:
+            "Une voiture fiable et économique, parfaite pour les trajets quotidiens.",
+          img: "../assets/images/tyotacorolla 2022.png",
+        },
+        {
+          id: 2,
+          brand: "Honda",
+          model: "Civic",
+          price: 28000,
+          year: 2023,
+          mileage: 22000,
+          fuel: "Essence",
+          description:
+            "Design sportif et technologies avancées pour un confort de conduite optimal.",
+          img: "../assets/images/hondacivic.png",
+        },
+        {
+          id: 3,
+          brand: "Ford",
+          model: "Mustang",
+          price: 55000,
+          year: 2024,
+          mileage: 5000,
+          fuel: "Essence",
+          description:
+            "Le rêve américain, un moteur puissant et un style emblématique.",
+          img: "../assets/images/fordmustang2024.png",
+        },
+        {
+          id: 4,
+          brand: "Nissan",
+          model: "Qashqai",
+          price: 29500,
+          year: 2023,
+          mileage: 18000,
+          fuel: "Diesel",
+          description:
+            "Un SUV compact et familial, idéal pour la ville et les escapades du week-end.",
+          img: "../assets/images/NissanQ.png"
+        },
+        {
+          id: 5,
+          brand: "BMW",
+          model: "Série 3",
+          price: 42000,
+          year: 2022,
+          mileage: 28000,
+          fuel: "Essence",
+          description:
+            "Luxe et performance réunis dans une berline allemande de renom.",
+          img: "../assets/images/bmw2022.png",
+        },
+        {
+          id: 6,
+          brand: "Tesla",
+          model: "Model 3",
+          price: 58000,
+          year: 2024,
+          mileage: 10000,
+          fuel: "Électrique",
+          description:
+            "La voiture électrique qui a révolutionné le marché. Technologie de pointe et autonomie exceptionnelle.",
+          img: "../assets/images/tesla2024.png",
+        },
+        {
+          id: 7,
+          brand: "Renault",
+          model: "Clio",
+          price: 18000,
+          year: 2021,
+          mileage: 45000,
+          fuel: "Essence",
+          description:
+            "La citadine française par excellence, agile et économique.",
+          img: "../assets/images/renaultclio.png",
+        },
+        {
+          id: 8,
+          brand: "Peugeot",
+          model: "3008",
+          price: 32000,
+          year: 2023,
+          mileage: 15000,
+          fuel: "Diesel",
+          description:
+            "Un SUV au design audacieux et un intérieur moderne. Confort garanti.",
+          img: "../assets/images/peugeot2023.png",
+        },
+        {
+          id: 9,
+          brand: "Volkswagen",
+          model: "Golf",
+          price: 26500,
+          year: 2023,
+          mileage: 20000,
+          fuel: "Essence",
+          description:
+            "La référence des berlines compactes. Fiabilité et polyvalence.",
+          img: "../assets/images/volkswagen2023.png",
+        },
+        {
+          id: 10,
+          brand: "Mercedes-Benz",
+          model: "Classe A",
+          price: 35000,
+          year: 2024,
+          mileage: 8000,
+          fuel: "Essence",
+          description:
+            "Un concentré de luxe et de technologie dans une berline compacte.",
+          img: "../assets/images/mercedes2024.png",
+        },
+        {
+          id: 11,
+          brand: "Audi",
+          model: "A4",
+          price: 38000,
+          year: 2022,
+          mileage: 30000,
+          fuel: "Essence",
+          description:
+            "Une berline élégante et performante, avec le raffinement Audi.",
+          img: "../assets/images/audi2022.png",
+        },
+        {
+          id: 12,
+          brand: "Hyundai",
+          model: "Tucson",
+          price: 31000,
+          year: 2023,
+          mileage: 25000,
+          fuel: "Essence",
+          description: "Un SUV moderne et spacieux, très bien équipé.",
+          img: "../assets/images/hyundai2023.png",
+        },
+        {
+          id: 13,
+          brand: "Kia",
+          model: "Sportage",
+          price: 34000,
+          year: 2024,
+          mileage: 12000,
+          fuel: "Essence",
+          description:
+            "Un SUV avec une garantie constructeur étendue et un design audacieux.",
+          img: "../assets/images/kia2024.png",
+        },
+        {
+          id: 14,
+          brand: "Skoda",
+          model: "Octavia",
+          price: 22000,
+          year: 2022,
+          mileage: 40000,
+          fuel: "Diesel",
+          description:
+            "Spacieuse et pratique, l'Octavia est une valeur sûre pour la famille.",
+          img: "../assets/images/skoda2022.png",
+        },
+        {
+          id: 15,
+          brand: "Porsche",
+          model: "911",
+          price: 120000,
+          year: 2024,
+          mileage: 1000,
+          fuel: "Essence",
+          description:
+            "Une icône de l'automobile, un moteur de course et des sensations uniques.",
+          img: "../assets/images/porshe2024.png",
+        },
+        {
+          id: 16,
+          brand: "Lexus",
+          model: "RX",
+          price: 65000,
+          year: 2023,
+          mileage: 15000,
+          fuel: "Hybride",
+          description:
+            "Un SUV hybride alliant luxe, confort et efficacité énergétique.",
+          img: "../assets/images/lexus2023.png",
+        },
+        {
+          id: 17,
+          brand: "Volvo",
+          model: "XC60",
+          price: 45000,
+          year: 2022,
+          mileage: 28000,
+          fuel: "Essence",
+          description:
+            "Un SUV élégant et sûr, reconnu pour sa sécurité de pointe.",
+          img: "../assets/images/volvo2022.png",
+        },
+        {
+          id: 18,
+          brand: "Jaguar",
+          model: "F-Pace",
+          price: 52000,
+          year: 2021,
+          mileage: 33000,
+          fuel: "Diesel",
+          description:
+            "Un SUV sportif avec le style et la performance typiques de Jaguar.",
+          img: "../assets/images/jaguar2021.png",
+        },
+        {
+          id: 19,
+          brand: "Fiat",
+          model: "500",
+          price: 16000,
+          year: 2023,
+          mileage: 15000,
+          fuel: "Essence",
+          description:
+            "La citadine italienne au charme intemporel. Parfaite pour la ville.",
+          img: "../assets/images/fiat2023.png",
+        },
+        {
+          id: 20,
+          brand: "Chevrolet",
+          model: "Camaro",
+          price: 48000,
+          year: 2022,
+          mileage: 20000,
+          fuel: "Essence",
+          description:
+            "Le muscle car américain par excellence. Son moteur V8 fait chanter la route.",
+          img: "../assets/images/chevrolet2022.png",
+        },
+        {
+          id: 21,
+          brand: "Jeep",
+          model: "Wrangler",
+          price: 49000,
+          year: 2024,
+          mileage: 5000,
+          fuel: "Essence",
+          description:
+            "Le 4x4 légendaire, prêt pour l'aventure hors des sentiers battus.",
+          img: "../assets/images/jeep2024.png",
+        },
+        {
+          id: 22,
+          brand: "Subaru",
+          model: "Outback",
+          price: 33000,
+          year: 2023,
+          mileage: 22000,
+          fuel: "Essence",
+          description:
+            "La sécurité et le confort dans toutes les conditions. Le break baroudeur.",
+          img: "../assets/images/subaru2023.png",
+        },
+        {
+          id: 23,
+          brand: "Mazda",
+          model: "CX-5",
+          price: 27000,
+          year: 2022,
+          mileage: 30000,
+          fuel: "Essence",
+          description:
+            "Un SUV japonais au design raffiné et aux technologies innovantes.",
+          img: "../assets/images/mazda2022.png",
+        },
+        {
+          id: 24,
+          brand: "Land Rover",
+          model: "Defender",
+          price: 85000,
+          year: 2024,
+          mileage: 8000,
+          fuel: "Diesel",
+          description:
+            "Le Defender moderne, toujours aussi robuste mais avec un confort luxueux.",
+          img: "../assets/images/landrover2024.png",
+        },
+        {
+          id: 25,
+          brand: "Mitsubishi",
+          model: "Outlander",
+          price: 24000,
+          year: 2021,
+          mileage: 45000,
+          fuel: "Essence",
+          description:
+            "Un SUV polyvalent et fiable, parfait pour la famille et les longs trajets.",
+          img: "../assets/images/mitsubishi2021.png",
+        },
+        {
+          id: 26,
+          brand: "Mercedes-Benz",
+          model: "Classe C",
+          price: 50000,
+          year: 2023,
+          mileage: 15000,
+          fuel: "Diesel",
+          description:
+            "Une berline de prestige qui allie élégance, confort et dynamisme.",
+          img: "../assets/images/mercedes2023.png",
+        },
+        {
+          id: 27,
+          brand: "Tesla",
+          model: "Model Y",
+          price: 60000,
+          year: 2024,
+          mileage: 12000,
+          fuel: "Électrique",
+          description:
+            "Un SUV électrique spacieux et performant, idéal pour les familles modernes.",
+          img: "../assets/images/tesla2024.png",
+        },
+        {
+          id: 28,
+          brand: "Porsche",
+          model: "Cayenne",
+          price: 95000,
+          year: 2022,
+          mileage: 25000,
+          fuel: "Essence",
+          description:
+            "Le SUV sportif de Porsche, une combinaison de luxe et de performance.",
+          img: "../assets/images/porschecayenne2022.png",
+        },
+        {
+          id: 29,
+          brand: "Dacia",
+          model: "Sandero",
+          price: 14000,
+          year: 2023,
+          mileage: 18000,
+          fuel: "Essence",
+          description:
+            "Une voiture simple, fiable et accessible, idéale pour un premier achat.",
+          img: "../assets/images/dacia2023.png",
+        },
+        {
+          id: 30,
+          brand: "Honda",
+          model: "CR-V",
+          price: 26000,
+          year: 2021,
+          mileage: 38000,
+          fuel: "Essence",
+          description:
+            "Un SUV spacieux et confortable, avec la fiabilité légendaire de Honda.",
+          img: "../assets/images/hondacrv2021.png",
+        },
+      ];
+
+      // Fonction pour générer une carte de véhicule
+      const createVehicleCard = (vehicle) => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-6 rounded-xl shadow-lg vehicle-card";
+        card.innerHTML = `
+                <img src="${vehicle.img}" alt="${vehicle.brand} ${
+          vehicle.model
+        }" class="w-full h-48 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-bold text-gray-800">${vehicle.brand} ${
+          vehicle.model
+        }</h3>
+                <p class="text-gray-600 mt-1">${vehicle.price.toLocaleString(
+                  "fr-FR"
+                )} €</p>
+                <a href="vehicule.html?id=${
+                  vehicle.id
+                }" class="mt-4 block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                    Voir les détails
+                </a>
+            `;
+        return card;
+      };
+
+      // Fonction pour afficher les véhicules
+      const renderVehicles = (vehicles) => {
+        const grid = document.getElementById("vehicle-grid");
+        const noResultsMessage = document.getElementById("no-results-message");
+        grid.innerHTML = "";
+
+        if (vehicles.length === 0) {
+          noResultsMessage.classList.remove("hidden");
+        } else {
+          noResultsMessage.classList.add("hidden");
+          vehicles.forEach((vehicle) => {
+            grid.appendChild(createVehicleCard(vehicle));
+          });
+        }
+      };
+
+      // Fonction pour mettre à jour les options des filtres
+      const updateFilters = () => {
+        const brands = [...new Set(vehiclesData.map((v) => v.brand))].sort();
+        const brandFilter = document.getElementById("brand-filter");
+        brandFilter.innerHTML = '<option value="">Toutes les marques</option>';
+        brands.forEach((brand) => {
+          const option = document.createElement("option");
+          option.value = brand;
+          option.textContent = brand;
+          brandFilter.appendChild(option);
+        });
+      };
+
+      // Fonction pour appliquer les filtres et la recherche
+      const applyFilters = () => {
+        const searchTerm = document
+          .getElementById("search-input")
+          .value.toLowerCase();
+        const brandFilter = document.getElementById("brand-filter").value;
+        const fuelFilter = document.getElementById("fuel-filter").value;
+        const priceSort = document.getElementById("price-sort").value;
+
+        let filteredVehicles = vehiclesData.filter((vehicle) => {
+          const matchesSearch =
+            vehicle.brand.toLowerCase().includes(searchTerm) ||
+            vehicle.model.toLowerCase().includes(searchTerm);
+          const matchesBrand =
+            brandFilter === "" || vehicle.brand === brandFilter;
+          const matchesFuel = fuelFilter === "" || vehicle.fuel === fuelFilter;
+          return matchesSearch && matchesBrand && matchesFuel;
+        });
+
+        // Trier les véhicules
+        filteredVehicles.sort((a, b) => {
+          if (priceSort === "asc") {
+            return a.price - b.price;
+          } else {
+            return b.price - a.price;
+          }
+        });
+
+        renderVehicles(filteredVehicles);
+      };
+
+      // Ajout des écouteurs d'événements pour les filtres
+      document.addEventListener("DOMContentLoaded", () => {
+        updateFilters();
+        applyFilters();
+        document
+          .getElementById("search-input")
+          .addEventListener("input", applyFilters);
+        document
+          .getElementById("brand-filter")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("fuel-filter")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("price-sort")
+          .addEventListener("change", applyFilters);
+      });
+    </script>
+    <script src="../js/auth.js" defer></script>
+  </body>
+</html>
