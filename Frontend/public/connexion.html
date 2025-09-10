@@ -161,7 +161,13 @@
     </footer>
 
     <script>
-      // Script pour l
+      document.addEventListener("DOMContentLoaded", () => {
+        const loginForm = document.getElementById("login-form");
+        const formMessage = document.getElementById("form-message");
+
+        loginForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
           // Récupérer les valeurs du formulaire
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
@@ -185,7 +191,6 @@
               // Stocker le token dans le localStorage du navigateur
               localStorage.setItem("token", data.token);
               localStorage.setItem("user", JSON.stringify(data.user)); // Store user info
-
               formMessage.textContent =
                 "Connexion réussie ! Vous allez être redirigé.";
               formMessage.classList.remove(
@@ -217,7 +222,9 @@
               "text-green-700"
             );
             formMessage.classList.add("bg-red-100", "text-red-700");
-          };
+          }
+        });
+      });
     </script>
     <script src="../js/main.js"></script>
     <script src="../js/auth.js" defer></script>
